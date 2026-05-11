@@ -54,16 +54,7 @@ kind load docker-image crud-app:latest --name demo
 cd ..
 ```
 
-### 3. Загрузить образ PostgreSQL в kind
-
-В `postgres.yaml` используется `imagePullPolicy: Never`, поэтому образ должен быть в kind-кластере:
-
-```bash
-docker pull postgres:16-alpine
-kind load docker-image postgres:16-alpine --name demo
-```
-
-### 4. Развернуть CRUD-приложение
+### 3. Развернуть CRUD-приложение
 
 ```bash
 kubectl apply -f k8s/namespace.yaml
@@ -81,7 +72,7 @@ curl http://localhost:8080/health
 curl http://localhost:8080/metrics
 ```
 
-### 5. Развернуть Prometheus и Grafana
+### 4. Развернуть Prometheus и Grafana
 
 ```bash
 kubectl apply -f k8s/monitoring/namespace.yaml
@@ -113,10 +104,10 @@ admin / admin
 
 Dashboard находится в папке `CRUD` и называется `CRUD App Observability`.
 
-### 6. Сгенерировать трафик
+### 5. Сгенерировать трафик
 
 ```bash
-BASE=http://localhost:8081
+BASE=http://localhost:8080
 
 curl -s -X POST "$BASE/users" \
   -H 'Content-Type: application/json' \
@@ -131,10 +122,19 @@ done
 
 После этого в Prometheus появятся метрики `crud_http_requests_total` и `crud_http_request_duration_seconds_bucket`, а в Grafana начнут заполняться панели.
 
-## Что показать на скриншотах
+## Скриншоты
 
-1. Prometheus -> Status -> Targets: job `crud-app` в состоянии `UP`.
-2. Grafana -> Dashboards -> CRUD -> `CRUD App Observability`: панели RPS, Latency, Errors с данными.
+### Prometheus Targets
+
+Prometheus автоматически обнаружил pod-ы приложения по label `app=crud-app` через `kubernetes_sd_configs`. Target приложения находится в состоянии `UP`, значит метрики с `/metrics` успешно собираются.
+
+![Prometheus targets](screenshots/prometheus-targets.png)
+
+### Grafana Dashboard
+
+Grafana подключена к Prometheus как datasource. Dashboard `CRUD App Observability` содержит панели RPS, Latency и Errors с данными приложения.
+
+![Grafana dashboard](screenshots/grafana-dashboard.png)
 
 ## Полезные команды
 

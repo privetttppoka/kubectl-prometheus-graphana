@@ -2,10 +2,7 @@ module crud-app
 
 go 1.22
 
-require (
-	github.com/lib/pq v1.10.9
-	github.com/prometheus/client_golang v1.19.1
-)
+require github.com/lib/pq v1.10.9
 
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
