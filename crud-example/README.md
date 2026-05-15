@@ -95,24 +95,6 @@ admin / admin
 
 Dashboard находится в папке `CRUD` и называется `CRUD App Observability`.
 
-### 5. Сгенерировать трафик
-
-```bash
-BASE=http://localhost:8080
-
-curl -s -X POST "$BASE/users" \
-  -H 'Content-Type: application/json' \
-  -d '{"name":"Alice","email":"alice@example.com"}'
-
-for i in $(seq 1 30); do
-  curl -s "$BASE/users" >/dev/null
-  curl -s "$BASE/users/1" >/dev/null
-  curl -s "$BASE/users/999" >/dev/null
-done
-```
-
-После этого в Prometheus появятся метрики `crud_http_requests_total` и `crud_http_request_duration_seconds_bucket`, а в Grafana начнут заполняться панели.
-
 ## Скриншоты
 
 ### Prometheus Targets
@@ -126,14 +108,3 @@ Prometheus автоматически обнаружил pod-ы приложен
 Grafana подключена к Prometheus как datasource. Dashboard `CRUD App Observability` содержит панели RPS, Latency и Errors с данными приложения.
 
 ![Grafana dashboard](screenshots/grafana-dashboard.png)
-
-## Полезные команды
-
-```bash
-kubectl get pods -n crud-demo
-kubectl get pods -n monitoring
-kubectl logs -l app=crud-app -n crud-demo -f
-kubectl logs -l app=prometheus -n monitoring -f
-kubectl logs -l app=grafana -n monitoring -f
-kind delete cluster --name demo
-```
