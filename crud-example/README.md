@@ -1,7 +1,6 @@
 # CRUD App Observability в Kubernetes
 
-Решение варианта 1: приложение разворачивается в локальном kind-кластере, Prometheus и Grafana устанавливаются через raw Kubernetes-манифесты с помощью `kubectl apply`.
-
+Решение варианта 1.
 ## Структура
 
 ```text
