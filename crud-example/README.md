@@ -2,15 +2,6 @@
 
 Решение варианта 1: приложение разворачивается в локальном kind-кластере, Prometheus и Grafana устанавливаются через raw Kubernetes-манифесты с помощью `kubectl apply`.
 
-## Что добавлено
-
-- эндпоинт `/metrics` в Go-приложении;
-- Prometheus в namespace `monitoring`;
-- auto-discovery pod-ов приложения через `kubernetes_sd_configs` по label `app=crud-app`;
-- Grafana с автоматически настроенным Prometheus datasource;
-- Grafana dashboard с панелями RPS, latency и errors;
-- экспортированный dashboard JSON: `k8s/monitoring/grafana-dashboard.json`.
-
 ## Структура
 
 ```text
