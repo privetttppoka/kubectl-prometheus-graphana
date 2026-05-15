@@ -32,3 +32,5 @@ charts/
 *.tgz
 
 docker-compose.override.yml
+
+hw-observability-k8s.pdf
